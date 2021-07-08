@@ -15,7 +15,7 @@ PLAYING = 1
 
 class Conway:
     def __init__(self):
-        pyxel.init(256, 256)
+        pyxel.init(256, 256, caption="Conway's Game of Life")
         self.rect_color = [[0 for i in range(MAX_RECT)]
                            for j in range(MAX_RECT)]
 
