@@ -6,3 +6,6 @@ The classic zero-player game made with Python
 
 # Usage
 `python conway.py` or use the binary in Releases
+
+# License
+MIT
