@@ -5,4 +5,4 @@ The classic zero-player game made with Python
 [pyxel](https://github.com/kitao/pyxel)
 
 # Usage
-`python conway.py`
+`python conway.py` or use the binary in Releases
