@@ -3,9 +3,12 @@ from copy import deepcopy
 from random import randint
 from sum_neighbors import sum_neighbors
 
+# grid options
 RECT_SIZE = 4
 MAX_RECT = 64
 
+# game states
+MENU = -1
 SET_UP = 0
 PLAYING = 1
 
@@ -16,7 +19,7 @@ class Conway:
         self.rect_color = [[0 for i in range(MAX_RECT)]
                            for j in range(MAX_RECT)]
 
-        self.game_state = SET_UP
+        self.game_state = MENU
         self.frame_set = 15
 
         pyxel.mouse(True)
@@ -54,6 +57,9 @@ class Conway:
 
     def update(self):
 
+        if self.game_state == MENU and pyxel.btnp(pyxel.MOUSE_LEFT_BUTTON):
+            self.game_state = SET_UP
+
         if pyxel.btnp(pyxel.KEY_1):
             self.frame_set = 1
         if pyxel.btnp(pyxel.KEY_2):
@@ -73,11 +79,26 @@ class Conway:
         elif self.game_state == SET_UP:
             self.check_mouse_input()
 
+    def draw_menu(self):
+        pyxel.text(64, 64, "Conway's Game of Life", 7)
+        pyxel.text(64+20, 84, "Controls", 7)
+        pyxel.text(64+20, 90, "1-4 to change speed", 7)
+        pyxel.text(64+20, 98, "R to run the game", 7)
+        pyxel.text(64+20, 106, "S to run the game", 7)
+        pyxel.text(64+20, 114, "Click on a cell to toggle it", 7)
+
+        pyxel.text(64, 145, "Click to start", 7)
+
     def draw(self):
-        for i in range(MAX_RECT):
-            for j in range(MAX_RECT):
-                pyxel.rect(i * RECT_SIZE, j * RECT_SIZE, RECT_SIZE,
-                           RECT_SIZE, self.rect_color[i][j])
+
+        if self.game_state == MENU:
+            pyxel.cls(0)
+            self.draw_menu()
+        else:
+            for i in range(MAX_RECT):
+                for j in range(MAX_RECT):
+                    pyxel.rect(i * RECT_SIZE, j * RECT_SIZE, RECT_SIZE,
+                               RECT_SIZE, self.rect_color[i][j])
 
 
 Conway()
