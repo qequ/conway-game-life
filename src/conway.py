@@ -1,6 +1,5 @@
 import pyxel
 from copy import deepcopy
-from random import randint
 from sum_neighbors import sum_neighbors
 
 # grid options
@@ -20,7 +19,7 @@ class Conway:
                            for j in range(MAX_RECT)]
 
         self.game_state = MENU
-        self.frame_set = 15
+        self.frame_set = 1
 
         pyxel.mouse(True)
 
@@ -89,6 +88,12 @@ class Conway:
 
         pyxel.text(64, 145, "Click to start", 7)
 
+    def draw_state(self):
+        if self.game_state == PLAYING:
+            pyxel.text(2, 2, "Mode: Playing", 7)
+        elif self.game_state == SET_UP:
+            pyxel.text(2, 2, "Mode: Set Up", 7)
+
     def draw(self):
 
         if self.game_state == MENU:
@@ -99,6 +104,6 @@ class Conway:
                 for j in range(MAX_RECT):
                     pyxel.rect(i * RECT_SIZE, j * RECT_SIZE, RECT_SIZE,
                                RECT_SIZE, self.rect_color[i][j])
-
+            self.draw_state()
 
 Conway()
