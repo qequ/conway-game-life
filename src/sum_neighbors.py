@@ -1,6 +1,8 @@
-def sum_neighbors(m, i, j, len_x,  len_y):
+
+def sum_neighbors(m, i, j, len_x, len_y):
     pos_x = [0]
     pos_y = [0]
+
     if i > 0:
         pos_x.append(-1)
     if j > 0:
@@ -16,6 +18,6 @@ def sum_neighbors(m, i, j, len_x,  len_y):
         for y in pos_y:
             if x == 0 and y == 0:
                 continue
-            sum_neigh += m[i+x][j+y]
+            sum_neigh += m[i + x][j + y]
 
     return sum_neigh
