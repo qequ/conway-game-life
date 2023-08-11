@@ -4,13 +4,15 @@ from sum_neighbors import sum_neighbors
 
 # grid options
 RECT_SIZE = 4
-MAX_RECT = 64
+MAX_RECT = 128
 
 # game states
 MENU = -1
 SET_UP = 0
 PLAYING = 1
 
+# UI
+TEXT_COLOR = 10
 
 class Conway:
     def __init__(self):
@@ -31,7 +33,7 @@ class Conway:
         for i in range(MAX_RECT):
             for j in range(MAX_RECT):
                 neighbors_alive = int(sum_neighbors(
-                    self.rect_color, i, j, MAX_RECT - 1, MAX_RECT - 1) / 7)
+                    self.rect_color, i, j, MAX_RECT - 1) / 7)
 
                 if self.rect_color[i][j] == 7:
                     # the grid is alive
@@ -46,13 +48,13 @@ class Conway:
         self.rect_color = new_array
 
     def check_mouse_input(self):
-        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
-            # get in which rectangle did the mouse collide
-            for i in range(MAX_RECT):
-                for j in range(MAX_RECT):
-                    if i*RECT_SIZE < pyxel.mouse_x <= i * RECT_SIZE+RECT_SIZE and j*RECT_SIZE < pyxel.mouse_y <= j * RECT_SIZE+RECT_SIZE: # noqa
-                        self.rect_color[i][j] = (
-                            self.rect_color[i][j] + 7) % 14
+        i = pyxel.mouse_x // RECT_SIZE
+        j = pyxel.mouse_y // RECT_SIZE
+
+        if pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+            self.rect_color[i][j] = 7
+        elif pyxel.btn(pyxel.MOUSE_BUTTON_RIGHT):
+            self.rect_color[i][j] = 0
 
     def update(self):
 
@@ -79,20 +81,20 @@ class Conway:
             self.check_mouse_input()
 
     def draw_menu(self):
-        pyxel.text(64, 64, "Conway's Game of Life", 7)
-        pyxel.text(64 + 20, 84, "Controls", 7)
-        pyxel.text(64 + 20, 90, "1-4 to change speed", 7)
-        pyxel.text(64 + 20, 98, "R to run the game", 7)
-        pyxel.text(64 + 20, 106, "S to run the game", 7)
-        pyxel.text(64 + 20, 114, "Click on a cell to toggle it", 7)
+        pyxel.text(64, 64, "Conway's Game of Life", TEXT_COLOR)
+        pyxel.text(64 + 20, 84, "Controls", TEXT_COLOR)
+        pyxel.text(64 + 20, 90, "1-4 to change speed", TEXT_COLOR)
+        pyxel.text(64 + 20, 98, "R to run the game", TEXT_COLOR)
+        pyxel.text(64 + 20, 106, "S to run the game", TEXT_COLOR)
+        pyxel.text(64 + 20, 114, "Left/Right Click on a cell to draw", TEXT_COLOR)
 
-        pyxel.text(64, 145, "Click to start", 7)
+        pyxel.text(64, 145, "Click to start", TEXT_COLOR)
 
     def draw_state(self):
         if self.game_state == PLAYING:
-            pyxel.text(2, 2, "Mode: Playing", 7)
+            pyxel.text(2, 2, "Mode: Playing", TEXT_COLOR)
         elif self.game_state == SET_UP:
-            pyxel.text(2, 2, "Mode: Set Up", 7)
+            pyxel.text(2, 2, "Mode: Set Up", TEXT_COLOR)
 
     def draw(self):
 
